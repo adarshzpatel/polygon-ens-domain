@@ -214,10 +214,11 @@ export default function Home() {
   };
 
   const switchNetwork = async () => {
-    if (window.ethereum) {
+    const {ethereum}:any = window
+    if (ethereum) {
       try {
         // Try to switch to the Mumbai testnet
-        await window.ethereum.request({
+        await ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: "0x13881" }], // Check networks.js for hexadecimal network ids
         });
@@ -226,7 +227,7 @@ export default function Home() {
         // In this case we ask the user to add it to their MetaMask
         if (error.code === 4902) {
           try {
-            await window.ethereum.request({
+            await ethereum.request({
               method: "wallet_addEthereumChain",
               params: [
                 {
@@ -249,7 +250,7 @@ export default function Home() {
         console.log(error);
       }
     } else {
-      // If window.ethereum is not found then MetaMask is not installed
+      // If ethereum is not found then MetaMask is not installed
       alert(
         "MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html"
       );
